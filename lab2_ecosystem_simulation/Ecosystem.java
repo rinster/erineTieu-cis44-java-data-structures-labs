@@ -36,17 +36,47 @@ public class Ecosystem {
                 newRiver[newPos] = animal;
             } else {
                 // Handle collisions
+
+                // Get other animal
                 Animal other = newRiver[newPos];
 
                 if (animal instanceof Bear && other instanceof Fish) {
                     animal.setPosition(newPos);
                     newRiver[newPos] = animal;
                 } else if (animal instanceof Fish && other instanceof Bear) {
-                    // Fish dies, Bear stays
-                    // Do nothing
+                    // Fish dies, Bear stays, Do nothing
                 } else if (animal.getClass() == other.getClass()) {
-                    // Same species: implement reproduction
-                    newRiver[newPos] = other; // keep existing
+                    // Reproduce, populate a random part of the array
+                    int[] emptyIndices = new int[river.length];
+                    int count = 0;
+
+                    // Collect empty spots in *newRiver* (not old river)
+                    for (int j = 0; j < river.length; j++) {
+                        if (newRiver[j] == null) {
+                            emptyIndices[count++] = j;
+                        }
+                    }
+
+                    if (count > 0) {
+                        int spawnIndex = emptyIndices[random.nextInt(count)];
+
+                        // Spawn a new animal
+                        Animal baby;
+                        if (animal instanceof Fish) {
+                            baby = new Fish(spawnIndex);
+                        } else {
+                            baby = new Bear(spawnIndex);
+                        }
+
+                        newRiver[spawnIndex] = baby;
+
+                        // Testing
+                        // System.out.println("*******" + baby.getClass().getSimpleName() +
+                        // " spawned at " + spawnIndex + "*******");
+                    }
+
+                    // No existing null spaces, keep the existing one in place
+                    newRiver[newPos] = other;
                 }
             }
         }
