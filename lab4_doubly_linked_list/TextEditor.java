@@ -5,7 +5,12 @@ public class TextEditor {
         String textState;
         Node prev;
         Node next;
-        // Node constructor...
+
+        public Node(String text, Node prev, Node next) {
+            this.textState = text;
+            this.prev = prev;
+            this.next = next;
+        }
     }
 
     private Node currentNode;
@@ -18,20 +23,36 @@ public class TextEditor {
 
     public void add(String newText) {
         // Create a new node with the updated text.
+        String updatedText = currentNode.textState + newText;
+
+        // clear the redo/fwd history
+        currentNode.next = null;
+
         // Set its 'prev' to the current node.
+        Node newNode = new Node(updatedText, currentNode, null);
         // Set the current node's 'next' to this new node.
+        currentNode.next = newNode;
         // Finally, update currentNode to point to the new node.
+        currentNode = newNode;
     }
 
     public String undo() {
         // Check if currentNode.prev is not null.
         // If it is, move currentNode back and return the text.
-        // Otherwise, you can't undo.
+        if (currentNode.prev != null) {
+            currentNode = currentNode.prev;
+            return currentNode.textState;
+        }
+        return currentNode.textState;
     }
 
     public String redo() {
         // Check if currentNode.next is not null.
-        // If it is, move currentNode forward and return the text.
+        if (currentNode.next != null) {
+            currentNode = currentNode.next;
+            return currentNode.textState;
+        }
+        return currentNode.textState;
     }
 
     public void printCurrent() {
