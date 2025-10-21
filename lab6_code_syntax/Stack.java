@@ -1,9 +1,11 @@
 package lab6_code_syntax;
 
-public interface Stack<T> {
-    void add();
+public interface Stack<E> {
+    void push(E item);
 
-    T pop();
+    E pop();
 
-    T peek();
+    E peek();
+
+    boolean isEmpty();
 }

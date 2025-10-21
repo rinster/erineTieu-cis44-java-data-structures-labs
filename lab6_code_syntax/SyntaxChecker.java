@@ -12,26 +12,36 @@ public class SyntaxChecker {
      */
     public static boolean isBalanced(String line) {
         // TODO: Implement this method using a Stack.
-        Stack buffer = new ArrayStack<>(line.length());
-        HashMap<String, boolean> brackets = new HashMap<String, boolean>();
-        brackets.put("{", true);
-        brackets.put("[", true);
-        brackets.put("(", true);
+        Stack<Character> buffer = new ArrayStack<>(line.length());
 
-        System.out.println(brackets);
+        /**
+         * Iterate through each 'ch' in line
+         * check if its an opening bracket, push to stack
+         * else if closing bracket
+         * - return false if empty
+         * - pop off the stack
+         * - check if char is matching open bracket,
+         * -- if not return false
+         */
+        for (int i = 0; i < line.length(); i++) {
+            char ch = line.charAt(i);
 
-        // Create a hashmap that will have the brackets to check against
-        // Initialize a stack to track the open brackets
-        // Iterate through the string
-        // for each open bracket that we see, add a closing on to the stack
-        // if the bracket is closing, it should match the last added bracket in the
-        // stack and pop it off
-        // if it isn't, return false
-        // The state of the stack should return empty to be a valid stack
+            if (ch == '(' || ch == '{' || ch == '[') {
+                buffer.push(ch);
+            } else if (ch == ')' || ch == '}' || ch == ']') {
+                if (buffer.isEmpty())
+                    return false;
 
-        // Your implementation here...
+                char open = buffer.pop();
+                if ((ch == ')' && open != '(') ||
+                        (ch == '{' && open != '}') ||
+                        (ch == '[' && open != ']')) {
+                    return false; // brackets don't match
+                }
+            }
+        }
 
-        return false; // Placeholder
+        return buffer.isEmpty(); // stack should be empty on completion
     }
 
     public static void main(String[] args) {
