@@ -28,7 +28,6 @@ public class MazeSolver {
      * @return true if a path is found, false otherwise.
      */
     public boolean solve() {
-        // TODO: Find the starting row and column of 'S'
         int startRow = -1;
         int startCol = -1;
         for (int i = 0; i < maze.length; i++) {

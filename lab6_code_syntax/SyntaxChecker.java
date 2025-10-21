@@ -1,7 +1,5 @@
 package lab6_code_syntax;
 
-import java.util.HashMap;
-
 public class SyntaxChecker {
 
     /**
@@ -11,7 +9,6 @@ public class SyntaxChecker {
      * @return true if symbols are balanced, false otherwise.
      */
     public static boolean isBalanced(String line) {
-        // TODO: Implement this method using a Stack.
         Stack<Character> buffer = new ArrayStack<>(line.length());
 
         /**

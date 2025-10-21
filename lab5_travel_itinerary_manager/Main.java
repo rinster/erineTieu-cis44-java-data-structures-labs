@@ -6,7 +6,7 @@ public class Main {
 
         Position<String> paris = itinerary.addLast("Paris");
         Position<String> rome = itinerary.addLast("Rome");
-        Position<String> london = itinerary.addLast("London");
+        // Position<String> london = itinerary.addLast("London");
 
         itinerary.addAfter(paris, "Louvre Museum");
         itinerary.addBefore(rome, "Colosseum");
