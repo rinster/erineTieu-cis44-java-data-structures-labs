@@ -79,6 +79,7 @@ public class SearchComparison {
         // Expected: -1
         // System.out.println("Find 30: Index " + binarySearch(sortedData, 30)); //
         // Expected: 7
+        System.out.println("Find 30: Index " + binarySearch(unsortedData, 22)); // Expected: 1
 
         // Example: Find 30 (this is your comparison test)
         System.out.println("\nLinear Search on sortedData looking for 30:");
