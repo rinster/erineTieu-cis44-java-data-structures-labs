@@ -15,7 +15,7 @@ public class RecursiveSearch {
 
     /**
      * Lab 2a: Recursive Binary Search (Helper Method)
-     * 
+     *
      * @param arr  The sorted array.
      * @param key  The value to find.
      * @param low  The starting index of the subarray.
@@ -24,46 +24,48 @@ public class RecursiveSearch {
      */
     public static int recursiveBinarySearch(int[] arr, int key, int low, int high) {
 
-        // Base Case: If the search range is invalid, the key is not present.
         if (low > high) {
             return -1;
         }
 
-        // TODO: Implement the recursive logic
-        // 1. Calculate mid index.
-        // 2. Check if arr[mid] is the key (this is the "found" base case).
-        // 3. If key < arr[mid], make a recursive call on the left half.
-        // 4. If key > arr[mid], make a recursive call on the right half.
+        int mid = (low + high) / 2;
 
-        return -1; // Placeholder
+        if (arr[mid] == key) {
+            return mid;
+        }
+
+        if (key < arr[mid]) {
+            return recursiveBinarySearch(arr, key, low, mid - 1);
+        }
+
+        return recursiveBinarySearch(arr, key, mid + 1, high);
     }
 
-    // Public wrapper method to start the recursive binary search
     public static int searchArray(int[] arr, int key) {
         return recursiveBinarySearch(arr, key, 0, arr.length - 1);
     }
 
     /**
      * Lab 2b: Binary Search Tree Search
-     * 
+     *
      * @param root The root node of the BST (or subtree).
      * @param key  The value to find.
      * @return The Node containing the key, or null if not found.
      */
     public Node searchBST(Node root, int key) {
 
-        // Base Case 1: The tree is empty or the key is at the root.
+        // Base Case 1: Tree empty or key found
         if (root == null || root.key == key) {
             return root;
         }
 
-        // TODO: Implement the recursive logic
-        // 1. If the key is less than the root's key, make a recursive call
-        // on the left subtree.
-        // 2. If the key is greater than the root's key, make a recursive call
-        // on the right subtree.
+        // If key is smaller, search left subtree
+        if (key < root.key) {
+            return searchBST(root.left, key);
+        }
 
-        return null; // Placeholder
+        // Otherwise search right subtree
+        return searchBST(root.right, key);
     }
 
     // --- Main method for testing ---
@@ -87,10 +89,9 @@ public class RecursiveSearch {
 
         System.out.println("\nBinary Search Tree Search:");
         Node result1 = bstSearcher.searchBST(root, 30);
-        System.out.println("Find 30: " + (result1 != null ? "Found (" + result1.key + ")" : "Not Found")); // Expected:
-                                                                                                           // Found
+        System.out.println("Find 30: " + (result1 != null ? "Found (" + result1.key + ")" : "Not Found"));
 
         Node result2 = bstSearcher.searchBST(root, 45);
-        System.out.println("Find 45: " + (result2 != null ? "Found" : "Not Found")); // Expected: Not Found
+        System.out.println("Find 45: " + (result2 != null ? "Found" : "Not Found"));
     }
 }
