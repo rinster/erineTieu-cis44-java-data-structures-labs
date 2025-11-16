@@ -11,11 +11,14 @@ public class SearchComparison {
      * @return The index of the key if found, otherwise -1.
      */
     public static int linearSearch(int[] arr, int key) {
+        int comparisonCounter = 0;
         for (int i = 0; i < arr.length; i++) {
+            System.out.println("LinearSearch comparisons: " + comparisonCounter++);
             if (arr[i] == key) {
                 return i;
             }
         }
+        System.out.println("LinearSearch comparisons: " + comparisonCounter++);
         return -1; // Return -1 if the loop finishes without finding the key.
     }
 
@@ -31,7 +34,7 @@ public class SearchComparison {
     public static int binarySearch(int[] arr, int key) {
         int low = 0;
         int high = arr.length - 1;
-
+        int comparisonCounter = 0;
         // While low is less than or equal to high:
         // 1. Calculate the middle index: mid = (low + high) / 2
         // 2. If arr[mid] matches the key, return mid.
@@ -39,12 +42,15 @@ public class SearchComparison {
         // 4. If the key is greater than arr[mid], update 'low'.
         while (low <= high) {
             int mid = (low + high) / 2;
-
+            comparisonCounter++;
             if (arr[mid] == key) {
+                System.out.println("BinarySearch comparisons: " + comparisonCounter);
                 return mid;
             } else if (key <= arr[mid]) {
+                System.out.println("BinarySearch comparisons: " + comparisonCounter);
                 high = mid - 1;
             } else {
+                System.out.println("BinarySearch comparisons: " + comparisonCounter);
                 low = mid + 1;
             }
         }
@@ -58,15 +64,27 @@ public class SearchComparison {
 
         System.out.println("--- Lab 1: Search Algorithm Implementation ---");
 
-        // Test Linear Search
-        System.out.println("Linear Search (Unsorted):");
-        System.out.println("Find 9: Index " + linearSearch(unsortedData, 9)); // Expected: 4
-        System.out.println("Find 3: Index " + linearSearch(unsortedData, 3)); // Expected: -1
+        // // Test Linear Search
+        // System.out.println("Linear Search (Unsorted):");
+        // System.out.println("Find 9: Index " + linearSearch(unsortedData, 9)); //
+        // Expected: 4
+        // System.out.println("Find 3: Index " + linearSearch(unsortedData, 3)); //
+        // Expected: -1
 
-        // Test Binary Search
-        System.out.println("\nBinary Search (Sorted):");
-        System.out.println("Find 9: Index " + binarySearch(sortedData, 9)); // Expected: 3
-        System.out.println("Find 3: Index " + binarySearch(sortedData, 3)); // Expected: -1
-        System.out.println("Find 30: Index " + binarySearch(sortedData, 30)); // Expected: 7
+        // // Test Binary Search
+        // System.out.println("\nBinary Search (Sorted):");
+        // System.out.println("Find 9: Index " + binarySearch(sortedData, 9)); //
+        // Expected: 3
+        // System.out.println("Find 3: Index " + binarySearch(sortedData, 3)); //
+        // Expected: -1
+        // System.out.println("Find 30: Index " + binarySearch(sortedData, 30)); //
+        // Expected: 7
+
+        // Example: Find 30 (this is your comparison test)
+        System.out.println("\nLinear Search on sortedData looking for 30:");
+        linearSearch(sortedData, 30);
+
+        System.out.println("\nBinary Search on sortedData looking for 30:");
+        binarySearch(sortedData, 30);
     }
 }
