@@ -16,8 +16,6 @@ public class TwoFourTreeDriver {
         System.out.println("\nFinal Tree Traversals:");
         tree.inorder();
 
-        // TODO: Students can also implement preorder/postorder traversal for practice
-
         System.out.println("\nExpected Inorder: 5 10 15 20 25 30 35 40 50 60 70 80 90");
     }
 }

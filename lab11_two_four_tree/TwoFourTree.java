@@ -25,21 +25,23 @@ class TwoFourNode {
         return keys.size() == 3;
     }
 
-    // Find correct child to descend for a given key
     public TwoFourNode getNextChild(int key) {
-        // TODO: Implement traversal logic
         int i = 0;
         while (i < keys.size() && key > keys.get(i)) {
             i++;
         }
+        // If children are empty (leaf), return null
+        if (children.isEmpty())
+            return null;
         return children.get(i);
     }
 
-    // Insert a key into this node (assume node not full)
     public void insertKey(int key) {
-        // TODO: Add key and sort
-        keys.add(key);
-        Collections.sort(keys);
+        int i = 0;
+        while (i < keys.size() && key > keys.get(i)) {
+            i++;
+        }
+        keys.add(i, key); // insert key at correct position
     }
 }
 
@@ -70,12 +72,53 @@ public class TwoFourTree {
     }
 
     private void split(TwoFourNode node) {
-        // TODO: Implement split logic
-        // 1. Create a new right node
-        // 2. Promote middle key to parent
-        // 3. Move keys and children appropriately
-        // 4. Update parent pointers
-        System.out.println("Splitting node with keys: " + node.keys);
+        int midIndex = 1; // middle key index in 0..3
+
+        TwoFourNode parent = node.parent;
+        TwoFourNode rightNode = new TwoFourNode();
+
+        // Middle key to promote
+        int midKey = node.keys.get(midIndex);
+
+        // Left node keeps left key(s)
+        List<Integer> leftKeys = new ArrayList<>();
+        leftKeys.add(node.keys.get(0));
+
+        // Right node takes right key(s)
+        rightNode.keys.add(node.keys.get(2));
+
+        // Handle children if internal node
+        if (!node.isLeaf()) {
+            rightNode.children.add(node.children.get(2));
+            rightNode.children.add(node.children.get(3));
+            // Update parent pointer for moved children
+            for (TwoFourNode child : rightNode.children) {
+                child.parent = rightNode;
+            }
+            // Remove children from original node
+            node.children = node.children.subList(0, 2);
+        }
+
+        // Update original node keys
+        node.keys = leftKeys;
+
+        if (parent == null) {
+            // Node is root → create new root
+            TwoFourNode newRoot = new TwoFourNode();
+            newRoot.keys.add(midKey);
+            newRoot.children.add(node);
+            newRoot.children.add(rightNode);
+            node.parent = newRoot;
+            rightNode.parent = newRoot;
+            root = newRoot;
+        } else {
+            // Promote midKey to parent
+            parent.insertKey(midKey);
+            // Add rightNode as child of parent
+            int insertPos = parent.children.indexOf(node) + 1;
+            parent.children.add(insertPos, rightNode);
+            rightNode.parent = parent;
+        }
     }
 
     // Inorder traversal
