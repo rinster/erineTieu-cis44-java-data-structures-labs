@@ -1,13 +1,15 @@
 package lab11_avl_tree;
 
-// TODO: Implement the AVLNode class
 class AVLNode {
     int key, height;
     AVLNode left, right;
 
     // Constructor
-    AVLNode(int key) {
-        // TODO: Initialize key, height, left, and right
+    AVLNode(int key, int height, AVLNode left, AVLNode right) {
+        this.key = key;
+        this.height = height;
+        this.left = left;
+        this.right = right;
     }
 }
 
@@ -15,39 +17,53 @@ public class AVLTree {
 
     AVLNode root;
 
-    // TODO: Return height of a node
     int height(AVLNode N) {
-        return 0; // placeholder
+        return (N == null) ? 0 : N.height;
     }
 
-    // TODO: Return maximum of two integers
     int max(int a, int b) {
-        return 0; // placeholder
+        return Math.max(a, b);
     }
 
-    // TODO: Compute balance factor
     int getBalance(AVLNode N) {
-        return 0; // placeholder
+        return (N == null) ? 0 : height(N.left) - height(N.right);
     }
 
-    // TODO: Right rotation
     AVLNode rightRotate(AVLNode y) {
-        return null; // placeholder
+        AVLNode x = y.left;
+        AVLNode T2 = x.right;
+
+        x.right = y;
+        y.left = T2;
+
+        // Update heights
+        y.height = 1 + max(height(y.left), height(y.right));
+        x.height = 1 + max(height(x.left), height(x.right));
+
+        return x;
     }
 
-    // TODO: Left rotation
     AVLNode leftRotate(AVLNode x) {
-        return null; // placeholder
+        AVLNode y = x.right;
+        AVLNode T2 = y.left;
+
+        y.left = x;
+        x.right = T2;
+
+        x.height = 1 + max(height(x.left), height(x.right));
+        y.height = 1 + max(height(y.left), height(y.right));
+
+        return y;
     }
 
-    // TODO: Left-Right rotation
     AVLNode leftRightRotate(AVLNode z) {
-        return null; // placeholder
+        z.left = leftRotate(z.left);
+        return rightRotate(z);
     }
 
-    // TODO: Right-Left rotation
     AVLNode rightLeftRotate(AVLNode y) {
-        return null; // placeholder
+        y.right = rightRotate(y.right);
+        return leftRotate(y);
     }
 
     // Public insert method
@@ -55,19 +71,47 @@ public class AVLTree {
         root = insert(root, key);
     }
 
-    // TODO: Recursive insertion with rebalancing
     private AVLNode insert(AVLNode node, int key) {
-        return null; // placeholder
+        if (node == null)
+            return new AVLNode(key, 1, null, null);
+
+        if (key < node.key)
+            node.left = insert(node.left, key);
+        else if (key > node.key)
+            node.right = insert(node.right, key);
+        else
+            return node;
+
+        node.height = 1 + max(height(node.left), height(node.right));
+
+        int balance = getBalance(node);
+
+        if (balance > 1 && key < node.left.key)
+            return rightRotate(node);
+
+        if (balance < -1 && key > node.right.key)
+            return leftRotate(node);
+
+        if (balance > 1 && key > node.left.key)
+            return leftRightRotate(node);
+
+        if (balance < -1 && key < node.right.key)
+            return rightLeftRotate(node);
+
+        return node;
     }
 
-    // TODO: Traversal methods
     public void inorder() {
         inorder(root);
         System.out.println();
     }
 
     private void inorder(AVLNode node) {
-        // placeholder
+        if (node == null)
+            return;
+        inorder(node.left);
+        System.out.print(node.key + " ");
+        inorder(node.right);
     }
 
     public void preorder() {
@@ -76,7 +120,11 @@ public class AVLTree {
     }
 
     private void preorder(AVLNode node) {
-        // placeholder
+        if (node == null)
+            return;
+        System.out.print(node.key + " ");
+        preorder(node.left);
+        preorder(node.right);
     }
 
     public void postorder() {
@@ -85,6 +133,10 @@ public class AVLTree {
     }
 
     private void postorder(AVLNode node) {
-        // placeholder
+        if (node == null)
+            return;
+        postorder(node.left);
+        postorder(node.right);
+        System.out.print(node.key + " ");
     }
 }
