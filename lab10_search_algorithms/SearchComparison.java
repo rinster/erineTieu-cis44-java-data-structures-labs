@@ -11,10 +11,11 @@ public class SearchComparison {
      * @return The index of the key if found, otherwise -1.
      */
     public static int linearSearch(int[] arr, int key) {
-        // TODO: Implement the iterative linear search algorithm.
-        // Loop through the array from index 0 to the end.
-        // If the element at the current index matches the key, return the index.
-
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == key) {
+                return i;
+            }
+        }
         return -1; // Return -1 if the loop finishes without finding the key.
     }
 
@@ -31,12 +32,22 @@ public class SearchComparison {
         int low = 0;
         int high = arr.length - 1;
 
-        // TODO: Implement the iterative binary search algorithm.
         // While low is less than or equal to high:
         // 1. Calculate the middle index: mid = (low + high) / 2
         // 2. If arr[mid] matches the key, return mid.
         // 3. If the key is less than arr[mid], update 'high'.
         // 4. If the key is greater than arr[mid], update 'low'.
+        while (low <= high) {
+            int mid = (low + high) / 2;
+
+            if (arr[mid] == key) {
+                return mid;
+            } else if (key <= arr[mid]) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
 
         return -1; // Return -1 if the loop finishes (low > high) without finding the key.
     }
