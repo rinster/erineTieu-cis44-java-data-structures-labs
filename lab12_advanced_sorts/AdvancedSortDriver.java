@@ -6,10 +6,11 @@ import java.util.Random;
 
 public class AdvancedSortDriver {
     public static void main(String[] args) {
-        Comparator comp = Comparator.naturalOrder();
+        Comparator<Integer> comp = Comparator.naturalOrder();
         int N = 20;
         Random rand = new Random();
 
+        // Create random array
         Integer[] arr1 = new Integer[N];
         for (int i = 0; i < N; i++) {
             arr1[i] = rand.nextInt(100);
@@ -19,10 +20,11 @@ public class AdvancedSortDriver {
         System.out.println("--- Test: Random Array (N=20) ---");
         System.out.println("Original: " + Arrays.toString(arr1));
 
+        // Merge Sort
         AdvancedSorters.mergeSort(arr1, comp);
         System.out.println("Merge Sort: " + Arrays.toString(arr1));
 
-        System.out.println("Original: " + Arrays.toString(arr2));
+        // Quick Sort
         AdvancedSorters.quickSort(arr2, comp);
         System.out.println("Quick Sort: " + Arrays.toString(arr2));
     }
