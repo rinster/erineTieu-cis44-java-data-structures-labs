@@ -7,19 +7,22 @@ public class SimpleSorters {
     /**
      * Sorts an array using the optimized Bubble Sort algorithm.
      */
-    public static void bubbleSort(K[] S, Comparator comp) {
+    public static <K> void bubbleSort(K[] S, Comparator comp) {
         int n = S.length;
         for (int i = 0; i < n - 1; i++) {
             boolean swapped = false;
-            // TODO: Implement the inner loop j
-            // ...
-            if (comp.compare(S[j], S[j + 1]) > 0) {
-                // TODO: Swap S[j] and S[j+1]
-                swapped = true;
-            }
-            // ... end inner loop ...
 
-            // TODO: Add check for early termination
+            for (int j = 0; j < n - i - 1; j++) {
+                if (comp.compare(S[j], S[j + 1]) > 0) {
+                    // Swap S[j] and S[j+1]
+                    K temp = S[j];
+                    S[j] = S[j + 1];
+                    S[j + 1] = temp;
+                    swapped = true;
+                }
+            }
+
+            // Early exit if no swaps
             if (!swapped) {
                 break;
             }
@@ -29,7 +32,7 @@ public class SimpleSorters {
     /**
      * Sorts an array using the Insertion Sort algorithm.
      */
-    public static void insertionSort(K[] S, Comparator comp) {
+    public static <K> void insertionSort(K[] S, Comparator comp) {
         int n = S.length;
         for (int i = 1; i < n; i++) {
             K cur = S[i];
