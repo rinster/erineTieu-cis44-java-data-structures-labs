@@ -1,1 +1,6 @@
-{}
+{
+    "vscode-pets.petColor": "paint beige",
+    "vscode-pets.petSize": "medium",
+    "vscode-pets.theme": "winter",
+    "vscode-pets.throwBallWithMouse": true
+}
