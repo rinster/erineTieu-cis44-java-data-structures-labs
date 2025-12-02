@@ -13,12 +13,15 @@ class SortedListPQ<K extends Comparable<K>, V> implements PriorityQueue<K, V> {
 
     public void insert(K key, V value) {
         MyEntry<K, V> newEntry = new MyEntry<>(key, value);
-        // TODO: Find the correct insertion point to maintain sorted order by key (O(n))
-        // Hint: Iterate and use list.add(index, newEntry) when list.get(index) >
-        // newEntry
-
-        // Default insert at end if it's the largest
-        list.addLast(newEntry);
+        int index = 0;
+        for (MyEntry<K, V> entry : list) {
+            if (newEntry.compareTo(entry) < 0) {
+                list.add(index, newEntry); // Insert before first larger element
+                return;
+            }
+            index++;
+        }
+        list.addLast(newEntry); // Insert at end if largest
     }
 
     public MyEntry<K, V> min() {
