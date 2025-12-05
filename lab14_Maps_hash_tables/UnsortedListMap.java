@@ -38,13 +38,18 @@ class UnsortedListMap<K, V> implements MapADT<K, V> {
         return null;
     }
 
-    // TODO: Complete this method (O(n))
     public V put(K key, V value) {
-        // 1. Search for existing key.
-
-        // 2. If found, update the value and return the old value.
-
-        // 3. If not found, add a new entry and return null.
+        int i = findEntryIndex(key);
+        if (i != -1) {
+            // 2. If found, update the value and return the old value.
+            V oldValue = list.get(i).getValue();
+            list.get(i).setValue(value);
+            return oldValue;
+        } else {
+            // 3. If not found, add a new entry and return null.
+            list.add(new Entry<>(key, value));
+            return null;
+        }
 
     }
 }
